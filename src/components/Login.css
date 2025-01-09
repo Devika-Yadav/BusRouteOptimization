@@ -1,0 +1,174 @@
+
+.login-container {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px; /* Space between header and login form */
+    
+     /* Add some padding around the container */
+  }
+  header {
+    flex: 1; /* Allow the header to take up available space */
+  }
+  
+.heading {
+    margin-top: 15.5%;
+    margin-left: 3.6%;
+    margin-right: 0%;
+    font-size: 3rem; /* Large font size */
+    color: white; 
+    /* border: 3px solid white;  */
+     padding: 10px 20px; /* Space inside the border */
+     text-align: center; 
+     font-family:'Roboto', sans-serif; 
+  
+    -webkit-text-stroke: 2px black; /* Black text border*/
+    /* text-stroke: 2px black; */
+    /* Center text */
+     /* border-radius: 10px; Rounded corners */
+ } 
+ .description {
+color: white;
+
+width: 100%;
+height: 15%;
+
+margin-left: 10.5%;
+
+} 
+
+.login {
+    color: rgb(9, 9, 9);
+    height: 70%;
+    background: rgba(255, 255, 255, 0.759);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 370px;
+    margin-left: 20%;
+    margin-bottom: 0%;
+    margin-right: 10%;
+
+    margin-top: 5%;
+    /* flex: 0 0 370px; */
+   
+    /* margin-left: 66%;
+    margin-bottom: 20%;
+    margin-right: 17%;
+    
+
+    margin-top: 0%; */
+}
+.login h1 {
+text-align: center;
+margin-bottom: 1.15rem;
+}
+.form-group {
+margin-bottom: 0.75rem;
+}
+
+.form-group label {
+display: block;
+margin-bottom: 0.5rem;
+font-weight: bold;
+}
+
+.form-group input {
+width: 94%;
+padding: 0.75rem;
+border: none;
+border-radius: 6px;
+background: rgba(64, 63, 63, 0.125);
+color: #121111;
+font-size: 1rem;
+margin-right: 2rem;
+}
+.form-group input:focus {
+outline: none;
+background: rgba(255, 255, 255, 0.3);
+}
+p {
+margin: 0;
+
+}
+
+.login-btn {
+width: 100%;
+padding: 0.75rem;
+border: none;
+border-radius: 6px;
+background: #3046d4;
+color: #fff;
+font-size: 1rem;
+font-weight: bold;
+cursor: pointer;
+transition: background 0.3s;
+margin-bottom: 0.75rem;
+}
+
+
+.login-btn:hover {
+background: #2908d1;
+}
+
+
+
+
+.forgot-password {
+font-weight: bold;
+text-align: left;
+margin-top: 0.75rem;
+margin-bottom: 0.5rem;
+}
+
+.forgot-password a {
+color: rgb(32, 14, 223);
+text-decoration: none;
+font-size: 0.9rem;
+}
+
+.forgot-password a:hover {
+text-decoration: underline;
+color: rgb(32, 14, 223);
+}
+/* Label styling */
+.custom-list-box {
+width: 100%;
+height: 38px;
+font-size: 1rem;
+/* font-weight: bold; */
+border: none;
+border-radius: 6px; /* Rounded corners */
+padding: 5px 10px;
+background: rgba(64, 63, 63, 0.125);
+color: #121111;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+appearance: none; /* Remove default dropdown arrow */
+background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D%22http%3A//www.w3.org/2000/svg%22 width%3D%2220%22 height%3D%2220%22 viewBox%3D%220 0 20 20%22%3E%3Cpath fill%3D%22%23333%22 d%3D%22M5 8l5 5 5-5H5z%22/%3E%3C/svg%3E');
+background-repeat: no-repeat;
+background-position: right 10px center;
+background-size: 16px;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+.custom-list-box:hover {
+background: #f1f1f1; /* Light gray background */
+color: #000; /* Darker text color */
+box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+}
+.custom-list-box:focus {
+outline: none;
+background: rgba(255, 255, 255, 0.3);
+border: 2px solid #2575fc; /* Blue border */
+box-shadow: 0 0 10px rgba(37, 117, 252, 0.5); /* Blue glow */
+}
+
+
+.or {
+    text-align: center;
+}
+.signup-login {
+    text-align: left;
+    margin-bottom: 3rem;
+}
