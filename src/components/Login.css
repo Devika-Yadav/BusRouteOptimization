@@ -1,5 +1,12 @@
-
 .login-container {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('C:\\Users\\Avula\\OneDrive\\Desktop\\m44.jpeg');
+    background-size: cover; /* Ensures the image covers the entire element */
+    background-position: center;
+
     display: flex;
     align-items: flex-start; /* Align items to the top */
     gap: 20px; /* Space between header and login form */

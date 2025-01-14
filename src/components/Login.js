@@ -1,6 +1,7 @@
 import React from 'react';
 import './Login.css';
-let login = () => {
+import { Link } from 'react-router-dom';
+let Login = () => {
     return (
         <React.Fragment>
             <div className='login-container'>
@@ -41,7 +42,7 @@ let login = () => {
                 <button type="submit" class="login-btn">Login</button>
                 <p className='or' >------or------</p>
                 <div class="forgot-password">
-                    <p className='signup-login' > Doesn't have an account ? <a href="/signup">SignUp</a></p>
+                    <p className='signup-login' > Doesn't have an account ? <Link to="/components/signup">Sign up here</Link></p>
                     
                 </div>
                 
@@ -58,4 +59,4 @@ let login = () => {
 
 };
 
-export default login;
+export default Login;
