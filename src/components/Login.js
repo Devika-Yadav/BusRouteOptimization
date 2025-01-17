@@ -36,7 +36,7 @@ let Login = () => {
                     <input type="password" id="password" placeholder="Enter your password" required/>
                 </div>
                 <div className="forgot-password">
-                    <a href="/forgot-project">Forgot Password?</a>
+                    <a href="/components/forgetpassword">Forgot Password?</a>
                 </div>
                 
                 <button type="submit" class="login-btn">Login</button>
