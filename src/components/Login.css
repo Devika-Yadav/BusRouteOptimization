@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-image: url(C:\Users\anany\OneDrive\Desktop\BusRouteOptimization\login.jpg);
+    background-image: url("C:\\Users\\Avula\\OneDrive\\Desktop\\m44.jpeg");
     background-size: cover; /* Ensures the image covers the entire element */
     background-position: center;
 
@@ -178,4 +178,28 @@ box-shadow: 0 0 10px rgba(37, 117, 252, 0.5); /* Blue glow */
 .signup-login {
     text-align: left;
     margin-bottom: 3rem;
+}
+
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-container input {
+    width: 100%;
+    padding-right: 40px; /* Leave space for the icon */
+    box-sizing: border-box;
+}
+
+.password-icon-inside {
+    position: absolute;
+    right: 10px; /* Position the icon inside the input field */
+    cursor: pointer;
+    color: #555;
+    font-size: 1.2rem;
+}
+
+.password-icon-inside:hover {
+    color: #000;
 }
