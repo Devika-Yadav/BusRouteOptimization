@@ -5,6 +5,7 @@ import Login from './components/Login'; // Correct if the file is Login.js
 import Signup from './components/Signup';
 import ForgetPassword from './components/ForgetPassword';
 
+import { ToastContainer } from "react-toastify";
 function App() {
   
   return (
@@ -12,9 +13,10 @@ function App() {
       <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/components/forgetpassword" element = {<ForgetPassword/>} />
-        <Route path="/components/signup" element={<Signup />} />
+        <Route path="/forgetpassword" element = {<ForgetPassword/>} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
+      <ToastContainer />
     </Router>
 
 
