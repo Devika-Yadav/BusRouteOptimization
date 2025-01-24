@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from "./firebase";
 import { toast } from "react-toastify";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-let Login = () => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [role, setRole] = useState(""); // Track selected role
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate(); // Hook for navigation
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,6 +22,19 @@ let Login = () => {
             toast.success("User logged in Successfully", {
                 position: "top-center",
             });
+
+            // Role-based navigation
+            if (role === "passenger") {
+                navigate("/passenger"); // Redirect to Passenger page
+            } else if (role === "driver") {
+                navigate("/driver"); // Replace with your driver route
+            } else if (role === "admin") {
+                navigate("/admin"); // Replace with your admin route
+            } else {
+                toast.error("Please select a valid role", {
+                    position: "bottom-center",
+                });
+            }
         } catch (error) {
             console.log(error.message);
             toast.error(error.message, {
@@ -44,7 +59,14 @@ let Login = () => {
                         <div className="form-group">
                             <div className="list-box-container">
                                 <label htmlFor="user-role" className="list-label">Select Role</label>
-                                <select id="user-role" className="custom-list-box">
+                                <select
+                                    id="user-role"
+                                    className="custom-list-box"
+                                    value={role}
+                                    onChange={(e) => setRole(e.target.value)}
+                                    required
+                                >
+                                    <option value="">--Select Role--</option>
                                     <option value="admin">Admin</option>
                                     <option value="driver">Driver</option>
                                     <option value="passenger">Passenger</option>
