@@ -1,0 +1,167 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: rgb(50, 20, 220);
+    color: white;
+    padding: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    z-index: 1000;
+    transition: transform 0.5s ease-in-out;
+    transform: translateX(-300px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.nav-aside ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.nav-aside ul li {
+    margin: 15px 0;
+}
+
+.nav-aside ul li a {
+    text-decoration: none;
+    margin-top: 10px;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-aside ul li a:hover {
+    color: #221abc;
+    background-color: rgba(245, 245, 245, 0.727);
+    padding: 10px;
+}
+.sidebar img {
+    border-radius: 50%;
+    background-color: whitesmoke;
+    width: 60px;
+    height: 60px;
+    display: block;
+    margin-top: 20px;
+    box-shadow: 0 0 10px black;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar h2 {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.sidebar h2 {
+margin-top: 8px;
+text-align: center;
+font-size: 24px;
+font-weight: bold;
+color: whitesmoke;
+}
+
+.nav-bar {
+background-color: rgb(50, 20, 220);
+color: whitesmoke;
+padding: 20px;
+width: 100%;
+position: fixed;
+top: 0;
+left: 0;
+z-index: 1000;
+display: flex;
+flex-wrap: wrap; /* Allow content to wrap */
+align-items: center; /* Align items in the center */
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.nav-bar .welcome {
+font-size: 24px;
+font-weight: bold;
+margin-right: auto; /* Keep this at the start */
+margin-bottom: 10px;
+}
+
+.nav-bar div {
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start; /* Align links to the left */
+gap: 20px; /* Set spacing between links to 20px */
+margin-left: 20px; /* Add some left margin for overall alignment */
+}
+
+.nav-bar div a {
+color: whitesmoke;
+text-decoration: none;
+font-weight: bold;
+transition: color 0.3s ease;
+margin-left: 20px;
+}
+
+.nav-bar div a:hover {
+color: #1a11bb;
+background-color: rgba(245, 245, 245, 0.727);
+padding: 6px;
+}
+
+.sidebar-toggle {
+position: fixed;
+top: 20px;
+left: 20px;
+cursor: pointer;
+font-size: 30px;
+color: white;
+z-index: 1100;
+transition: left 0.4s ease-in-out;
+}
+
+.sidebar.active + .sidebar-toggle {
+left: 250px;
+}
+
+.nav-bar {
+    background-color: rgb(50, 20, 220);
+    color: whitesmoke;
+    padding: 10px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    height: 70px;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.nav-bar .welcome {
+    margin-top: 14px;
+    font-size: 24px;
+    margin-left: 50px;
+}
+
+.nav-bar div {
+    margin-left: 400px;
+}
+
+.nav-bar div a {
+    
+    color: whitesmoke;
+    text-decoration: none;
+    margin-left: -8px;
+    padding-left: 10px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}

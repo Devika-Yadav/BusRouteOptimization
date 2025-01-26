@@ -11,7 +11,7 @@
     left: 0;
     width: 250px;
     height: 100%;
-    background-color: crimson;
+    background-color: rgb(50, 20, 220);
     color: white;
     padding: 20px;
     font-family: 'Times New Roman', Times, serif;
@@ -56,31 +56,31 @@
 }
 
 .nav-aside ul li {
-    margin: 15px 0;
+    text-align: center;
 }
 
-.nav-aside ul li a {
-    text-decoration: none;
-    margin-top: 10px;
-    color: white;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.nav-aside ul li a:hover {
-    color: #1abc9c;
-}
 .nav-aside ul li button {
+    margin-bottom: 15px;
+    color: whitesmoke;
     text-decoration: none;
-    margin-top: 10px;
-    color: white;
     font-weight: bold;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 6px; /* Ensure consistent padding */
+    background-color: transparent; /* Default background color */
+    border: none; /* Avoid borders to prevent shifting */
+    outline: none; /* Remove outline */
+    display: inline-block;
+    width: 100%; /* Ensure button size consistency */
+    text-align: center;
 }
 
 .nav-aside ul li button:hover {
-    color: #1abc9c;
+    color: #1a11bb;
+    background-color: rgba(245, 245, 245, 0.727);
 }
+
 .sidebar-toggle {
     position: fixed;
     top: 20px;
@@ -96,31 +96,25 @@
     left: 250px;
 }
 
-.nav-bar {
-    background-color: crimson;
-    color: whitesmoke;
-    padding: 10px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    display: flex;
-    height: 70px;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.nav-bar .welcome {
-    font-size: 24px;
-    margin-left: 50px;
-}
-
 .nav-bar div {
-    margin-left: 400px;
+    margin-left: 20px;  /* Reduce the left margin to move content towards the left */
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    gap: 16px; /* Spacing between links */
 }
 
-    
+.nav-bar div button {
+    color: whitesmoke;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.nav-bar div button:last-child {
+    margin-right: 20px;  /* Add right margin to the last button */
+}
 
 .nav-bar div button {
     color: whitesmoke;
@@ -147,7 +141,7 @@
     background-color: whitesmoke;
 }
 
-.card {
+.card-6 {
     background: white;
     padding-top: 20px;
     padding-left: 40px;
@@ -155,9 +149,9 @@
     padding-bottom: 40px;
     border-radius: 10px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
-    max-width: 800px;
-    margin-top: 140px;
-    margin-left: 270px;
+    width: 800px;
+    margin-top: 40px;
+    margin-left: 70px;
     
 }
 
@@ -346,14 +340,14 @@ transform: scale(1.05);
     color: #0056b3;
   }
   .about-container {
-    margin: 100px;
+    margin: 80px;
     margin-left: 100px;
     padding: 20px;
     width: 82%;
     height: 800px;
     /* text-align: center; */
     border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
   
   .about-section {
@@ -378,4 +372,4 @@ transform: scale(1.05);
   .about-section li {
     margin-bottom: 10px;
   }
-  
+ 

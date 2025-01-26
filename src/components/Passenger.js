@@ -90,19 +90,16 @@ const Sidebar = ({ active, toggleSidebar, loadPage }) => {
         <nav className="nav-aside">
           <ul>
             <li>
-              <a href="#track-bus" onClick={() => loadPage("track-bus")}>
-                Routes
-              </a>
+            <button onClick={() => loadPage("track-bus")} className="link-button">Routes</button>
+
             </li>
             <li>
-              <a href="#about" onClick={() => loadPage("about")}>
-                About
-              </a>
+            <button onClick={() => loadPage("about")} className="link-button">About</button>
+
             </li>
             <li>
-              <a href="#contact-us" onClick={() => loadPage("contact-us")}>
-                Contact Us
-              </a>
+            <button onClick={() => loadPage("contact-us")} className="link-button">Contact Us</button>
+
             </li>
             <li>
             <button onClick={handleLogout} className="link-button">Logout</button>
@@ -236,7 +233,7 @@ const TrackBus = () => {
 
 const ContactUs = () => (
   <section id="contact-us" className="contact-us">
-    <div className="card">
+    <div className="card-6">
       <h2>Contact Us</h2>
       <form id="contact-form">
         <label htmlFor="name">Name:</label>

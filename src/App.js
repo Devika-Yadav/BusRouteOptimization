@@ -6,6 +6,8 @@ import Signup from './components/Signup';
 import ForgotPassword from './components/ForgotPassword';
 import Passenger from './components/Passenger'; // Import Passenger component
 import { ToastContainer } from "react-toastify";
+import Admin from './components/Admin';
+import Driver from './components/Driver';
 
 function App() {
     return (
@@ -16,6 +18,10 @@ function App() {
                     <Route path="/forgetpassword" element={<ForgotPassword />} />
                     <Route exact={true} path="/signup" element={<Signup />} />
                     <Route path="/passenger" element={<Passenger />} /> {/* Passenger route */}
+                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/driver" element={<Driver />} />
+
+
                 </Routes>
                 <ToastContainer />
             </Router>
