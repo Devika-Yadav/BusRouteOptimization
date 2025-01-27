@@ -1,62 +1,33 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Login from "./Login";
+import React, { useState } from "react";
 import "./Admin.css";
+import Login from "./Login";
+import { useNavigate } from 'react-router-dom'; // Move your styles into a CSS file
 
-
-const Admin = () => {
-  const [setOptimizedRoute] = useState(false);
-  const [bus] = useState('');
-  const [route] = useState('');
-  const [driver] = useState('');
-  const [assignedBus] = useState('');
-
-  // Handle optimized route button click
-  const getOptimizedRoute = () => {
-    alert('Fetching the optimized route...');
-    setOptimizedRoute(true); // Show the optimized route section
-  };
-
-  // Handle bus assignment
-  const assignBus = (e) => {
-    e.preventDefault();
-    if (bus && route) {
-      alert(`Success! ${bus} has been assigned to ${route}.`);
-    } else {
-      alert('Error: Please select both a bus and a route.');
-    }
-  };
-
-  // Handle driver assignment
-  const assignDriver = (e) => {
-    e.preventDefault();
-    if (driver && assignedBus) {
-      alert(`Success! ${driver} has been assigned to ${assignedBus}.`);
-    } else {
-      alert('Error: Please select both a driver and a bus.');
-    }
-  };
-
+const Driver = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
-  const [page, setPage] = useState('Dashboard');
+  const [page,setPage] = useState("Dashboard");
 
+  const toggleSidebar = () => {
+    setSidebarActive(!sidebarActive);
+  };
   const loadPage = (page) => {
     setPage(page);
   };
-
   const renderContent = () => {
     switch (page) {
-      case 'Dashboard':
-        return <Dashboard />;
-      case 'RouteManagement':
-        return <RouteManagement getOptimizedRoute={getOptimizedRoute} />;
-      case 'DriverManagement':
-        return <DriverManagement assignBus={assignBus} assignDriver={assignDriver} />;
-      case 'RealTimeMonitoring':
-        return <RealTimeMonitoring />;
-      case 'Feedbacks':
-        return <Feedbacks />;
-      case 'Logout':
+      
+      case "Dashboard":
+        return <Dashboard/>;
+      case "Route Management":
+        return <RouteManagement/>;
+      case "Driver Management":
+        return <DriverManagement />;
+        case "Real-Time Monitoring":
+        return <RealTimeMonitoring/>;
+      case "Feedback":
+        return <Feedback />;
+        
+      case "Logout":
         return <Login />;
       default:
         return (
@@ -67,85 +38,93 @@ const Admin = () => {
         );
     }
   };
-
   return (
     <div className="app">
       <Navbar loadPage={loadPage} />
-      <Sidebar active={sidebarActive} toggleSidebar={() => setSidebarActive(!sidebarActive)} loadPage={loadPage} />
-      <div className={`content ${sidebarActive ? 'shifted' : ''}`}>
+      <Sidebar active={sidebarActive} toggleSidebar={toggleSidebar} loadPage={loadPage} />
+      <div className={`content ${sidebarActive ? "shifted" : ""}`}>
         {renderContent()}
       </div>
     </div>
   );
-};
-
+}
 const Navbar = ({ loadPage }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate('/'); // Navigate to the login page
+    navigate("/"); // Navigate to the login page
   };
-
   return (
     <nav className="nav-bar">
       <div className="welcome">Welcome to Dynamic Bus Route Optimization</div>
       <div>
-        <button onClick={() => loadPage('Dashboard')} className="link-button">Dashboard</button>
-        <button onClick={() => loadPage('RouteManagement')} className="link-button">Route Management</button>
-        <button onClick={() => loadPage('DriverManagement')} className="link-button">Driver Management</button>
-        <button onClick={() => loadPage('RealTimeMonitoring')} className="link-button">Real-Time Monitoring</button>
-        <button onClick={() => loadPage('Feedbacks')} className="link-button">Feedbacks</button>
-        <button onClick={handleLogout} className="link-button">Logout</button>
+      <button onClick={() => loadPage("Dashboard")} className="link-button"> Dashboard</button>
+<button onClick={() => loadPage("Route Management")} className="link-button">Route Management</button>
+<button onClick={() => loadPage("Driver Management")} className="link-button">Driver Management</button>
+<button onClick={() => loadPage("Real-Time Monitoring")} className="link-button">Real-Time Monitoring</button>
+<button onClick={() => loadPage("Feedback")} className="link-button">Feedback</button>
+
+<button onClick={handleLogout} className="link-button">Logout</button>
+
       </div>
     </nav>
   );
 };
-
 const Sidebar = ({ active, toggleSidebar, loadPage }) => {
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    navigate('/'); // Navigate to the login page
+   // Initialize the useNavigate hook
+   const handleLogout = () => {
+    navigate("/"); // Navigate to the login page
   };
 
   return (
     <>
-      <div className={`sidebar ${active ? 'active' : ''}`}>
+      <div className={`sidebar ${active ? "active" : ""}`}>
         <h2>Admin Panel</h2>
         <img src="/passenger profile.png" alt="profile" />
+
         <nav className="nav-aside">
           <ul>
             <li>
-              <button onClick={() => loadPage('Dashboard')} className="link-button">Dashboard</button>
+            <button onClick={() => loadPage("Dashboard")} className="link-button"> Dashboard</button>
+
             </li>
             <li>
-              <button onClick={() => loadPage('RouteManagement')} className="link-button">Route Management</button>
+            <button onClick={() => loadPage("Route Management")} className="link-button">Route Management</button>
+
             </li>
             <li>
-              <button onClick={() => loadPage('DriverManagement')} className="link-button">Driver Management</button>
+            <button onClick={() => loadPage("Driver Management")} className="link-button">Driver Management</button>
+
             </li>
             <li>
-              <button onClick={() => loadPage('RealTimeMonitoring')} className="link-button">Real-Time Monitoring</button>
+            <button onClick={() => loadPage("Real-Time Monitoring")} className="link-button">Real-Time Monitoring</button>
+
             </li>
             <li>
-              <button onClick={() => loadPage('Feedbacks')} className="link-button">Feedbacks</button>
+            <button onClick={() => loadPage("AlertsandFeedback")} className="link-button">Feedback</button>
+
             </li>
             <li>
-              <button onClick={handleLogout} className="link-button">Logout</button>
+            <button onClick={handleLogout} className="link-button">Logout</button>
             </li>
+
           </ul>
         </nav>
       </div>
-      <div className={`sidebar-toggle ${active ? 'active' : ''}`} onClick={toggleSidebar}>
+      <div
+        className={`sidebar-toggle ${active ? "active" : ""}`}
+        onClick={toggleSidebar}
+      >
         &#9776;
       </div>
     </>
   );
 };
-
 const Dashboard = () => (
   <>
-    <div className="stat-card">
+  <div class="container">
+  <div className="stat-card">
       <h1>Analytics</h1>
       <div className="piechart-container">
         <div className="piechart"></div>
@@ -160,32 +139,38 @@ const Dashboard = () => (
           </div>
           <div className="color-item">
             <div className="color-box" style={{ backgroundColor: 'rgb(246, 251, 245)' }}></div>
-            {/* <span>Returning to distribution center 146</span> */}
+            <span>Returning to distribution center 146</span>
           </div>
         </div>
       </div>
     </div>
-    <div id="main-content-1">
-      <h1>Reports</h1>
-      <section id="fleet-usage-report">
-        <h2>Fleet Usage Report</h2>
-        <table id="fleet-usage-table">
-          <thead>
-            <tr>
-              <th>Bus ID</th>
-              <th>Route</th>
-              <th>Occupancy Rate</th>
-              <th>On-Time Performance (%)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>DTC504</td><td>Route 146</td><td>85%</td><td>95%</td></tr>
-            <tr><td>DTC124</td><td>Route 32A</td><td>75%</td><td>90%</td></tr>
-            <tr><td>DTC324</td><td>Route 231D</td><td>65%</td><td>92%</td></tr>
+    <div className="main-content-1">
+    <h1>Reports </h1>
+
+    {/* <!-- Fleet Usage Report Section --> */}
+    <section id="fleet-usage-report">
+      <h2>Fleet Usage Report</h2>
+      <table id="fleet-usage-table">
+        <thead>
+          <tr>
+            <th>Bus ID</th>
+            <th>Route</th>
+            <th>Occupancy Rate</th>
+            <th>On-Time Performance (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* <!-- Fleet Usage Data will be injected here --> */}
+          <tr><td>DTC504</td> <td>Route 146</td> <td>85%</td><td>95%</td></tr>
+              <tr><td>DTC124</td> <td>route 32A</td> <td>75%</td><td>90%</td></tr>
+                <tr><td>DTC324</td> <td>Route 231D</td> <td>65%</td><td>92%</td></tr>
+          
           </tbody>
-        </table>
-        </section>
-        <section id="traffic-patterns-report">
+      </table>
+    </section>
+
+    {/* <!-- Traffic Patterns Report Section --> */}
+    <section id="traffic-patterns-report">
       <h2>Traffic Patterns Report</h2>
       <table id="traffic-patterns-table">
         <thead>
@@ -223,134 +208,16 @@ const Dashboard = () => (
     <tr><td>Route 231A</td> <td>3</td> <td>95%</td></tr>
         </tbody>
       </table>
-      </section>
-    </div>
+    </section>
+</div>
+          </div>
   </>
 );
-
-const RouteManagement = ({ getOptimizedRoute }) => (
-  <div class="route-opt" id="routeOpt">
-  <h2 class="title">Get Optimized Route</h2>
-  <form id="route-form" class="form">
-    <div class="form-group">
-      <label for="source" class="label">Source Location:</label>
-      <input type="text" id="source" name="source" placeholder="Enter Source Location" class="input" />
-    </div>
-
-    <div class="form-group">
-      <label for="destination" class="label">Destination Location:</label>
-      <input type="text" id="destination" name="destination" placeholder="Enter Destination Location" class="input" />
-    </div>
-
-    <div class="checkbox-group">
-      <div class="checkbox-item">
-        <input type="checkbox" id="traffic-update" class="checkbox" />
-        <label for="traffic-update">Include Real-Time Traffic Updates</label>
-      </div>
-      <div class="checkbox-item">
-        <input type="checkbox" id="weather-update" class="checkbox" />
-        <label for="weather-update">Consider Weather Conditions</label>
-      </div>
-    </div>
-
-    <div class="route-preferences">
-      <label class="label">Route Preferences:</label>
-      <div class="preferences">
-        <label><input type="checkbox" id="avoid-tolls" /> Avoid Tolls</label>
-        <label><input type="checkbox" id="shortest-route" /> Shortest Route</label>
-      </div>
-    </div>
-
-    <button type="button" class="submit-btn" onClick="getOptimizedRoute()">Get Optimized Route</button>
-  </form>
-</div>
-);
-
-const RealTimeMonitoring = () => (
-  <div className="real-monitoring-card">
-    <h2>Real-Time Monitoring</h2>
-    <p>Details about Real-Time Monitoring...</p>
-  </div>
-);
-
-const DriverManagement = ({ assignBus, assignDriver }) => (
+const Feedback = () => (
   <>
-    <div className="card-container">
-      <div className="card-6">
-        <h2>Assign Bus to Route</h2>
-        <form id="bus-assignment-form" onSubmit={assignBus}>
-          <label for="bus-select">Select Bus:</label>
-          <select id="bus-select">
-            <option value="bus1">Bus 1</option>
-            <option value="bus2">Bus 2</option>
-            <option value="bus3">Bus 3</option>
-          </select>
-
-          <label for="route-select">Select Route:</label>
-          <select id="route-select">
-            <option value="route1">Route A (Stop 1 → Stop 2)</option>
-            <option value="route2">Route B (Stop 2 → Stop 3)</option>
-            <option value="route3">Route C (Stop 3 → Stop 4)</option>
-          </select>
-
-          <button type="submit">Assign Bus</button>
-        </form>
-      </div>
-    </div>
-
-    <div className="card-6">
-      <h2>Assign Driver to Bus</h2>
-      <form id="driver-assignment-form" onSubmit={assignDriver}>
-        <label for="driver-select">Select Driver:</label>
-        <select id="driver-select">
-          <option value="driver1">Driver 1</option>
-          <option value="driver2">Driver 2</option>
-          <option value="driver3">Driver 3</option>
-        </select>
-
-        <label for="driver-bus-select">Select Bus:</label>
-        <select id="driver-bus-select">
-          <option value="bus1">Bus 1</option>
-          <option value="bus2">Bus 2</option>
-          <option value="bus3">Bus 3</option>
-        </select>
-
-        <button type="submit">Assign Driver</button>
-      </form>
-    </div>
-    <div class='card-7'>
-    <div class="section" id="driver-schedules">
-    <input type="text" placeholder="Search"/>
-            <button>Search</button>
-            <div class='driver-sch'>
-    <h2>Driver Schedules</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Driver</th>
-                <th>Bus</th>
-                <th>Shift</th>
-                <th>Schedule Date</th>
-            </tr>
-        </thead>
-        <tbody id="schedule-list">
-            {/* <!-- Schedules will be dynamically populated --> */}
-            
-            <tr> <td>Pavan rao</td> <td>DTC432</td> <td>morning</td> <td>01-02-25</td></tr>
-            <tr> <td>Bhuvan</td> <td>DTC136</td>  <td>afternoon</td> <td>02-02-25</td></tr>
-            <tr> <td>varun </td><td>DTC145</td> <td>evening</td> <td>02-02-25</td></tr>
-           
-        </tbody>
-    </table>
-    </div>
-</div>
-</div>
-  </>
-);
-const Feedbacks = () => (
-  <>
+  <div class="container">
   <div class="admin-feedback">
-    <h3>Pssenger Feedback</h3>
+    <h3>Passenger Feedback</h3>
     <table id="feedbackTable">
         <thead>
             <tr>
@@ -385,6 +252,150 @@ const Feedbacks = () => (
         </tbody>
     </table>
 </div>
+</div>
+          
+      
   </>
 );
-export default Admin;
+const DriverManagement = () => (
+  <>
+  <div className="Container">
+  <div class="row">
+              <div class="card-6">
+              <div id="bus-assignment" class="section">
+            <h2>Assign Bus to Route</h2>
+            <form id="bus-assignment-form">
+                <label for="bus-select">Select Bus:</label>
+                <select id="bus-select">
+                    <option value="bus1">Bus 1</option>
+                    <option value="bus2">Bus 2</option>
+                    <option value="bus3">Bus 3</option>
+                </select>
+
+                <label for="route-select">Select Route:</label>
+                <select id="route-select">
+                    <option value="route1">Route A (Stop 1 → Stop 2)</option>
+                    <option value="route2">Route B (Stop 2 → Stop 3)</option>
+                    <option value="route3">Route C (Stop 3 → Stop 4)</option>
+                </select>
+
+                <button type="submit" onclick="assignBus()">Assign Bus</button>
+            </form>
+        </div>
+              </div>
+              <div class="card-6">
+              <div class="section" id="driver-assignment">
+            <h2>Assign Driver to Bus</h2>
+            <form id="driver-assignment-form">
+                <label for="driver-select">Select Driver:</label>
+                <select id="driver-select">
+                    <option value="driver1">Driver 1</option>
+                    <option value="driver2">Driver 2</option>
+                    <option value="driver3">Driver 3</option>
+                </select>
+
+                <label for="driver-bus-select">Select Bus:</label>
+                <select id="driver-bus-select">
+                    <option value="bus1">Bus 1</option>
+                    <option value="bus2">Bus 2</option>
+                    <option value="bus3">Bus 3</option>
+                </select>
+                <button type="submit" onclick="assignDriver()">Assign Driver</button>
+                
+            </form>
+        </div>
+              </div>
+            </div>
+            <div class="row-2">
+              <div class="card-7">
+              <div class="section" id="driver-schedules">
+    <input type="text" placeholder="Search"/>
+            <button>Search</button>
+            <div class='driver-sch'>
+    <h2>Driver Schedules</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Driver</th>
+                <th>Bus</th>
+                <th>Shift</th>
+                <th>Schedule Date</th>
+            </tr>
+        </thead>
+        <tbody id="schedule-list">
+            {/* <!-- Schedules will be dynamically populated --> */}
+            
+            <tr> <td>Pavan rao</td> <td>DTC432</td> <td>morning</td> <td>01-02-25</td></tr>
+            <tr> <td>Bhuvan</td> <td>DTC136</td>  <td>afternoon</td> <td>02-02-25</td></tr>
+            <tr> <td>varun </td><td>DTC145</td> <td>evening</td> <td>02-02-25</td></tr>
+           
+        </tbody>
+    </table>
+    </div>
+</div>
+              </div>
+            </div>
+    
+  </div>
+  </>
+
+);
+const RealTimeMonitoring = () => (
+  <>
+  <div className="Container">
+  <div className="real-monitoring-card">
+    <h2>Real-Time Monitoring</h2>
+    <p>Real-Time Monitoring...(MAP)</p>
+  </div>
+    
+  </div>
+  </>
+
+);
+  const RouteManagement = () => (
+    <>
+     <div class="container">
+            <div class="card-4">
+            <div class="route-opt" id="routeOpt">
+        <h2 class="title">Get Optimized Route</h2>
+        <form id="route-form" class="form">
+          <div class="form-group">
+            <label for="source" class="label">Source Location:</label>
+            <input type="text" id="source" name="source" placeholder="Enter Source Location" class="input" />
+          </div>
+      
+          <div class="form-group">
+            <label for="destination" class="label">Destination Location:</label>
+            <input type="text" id="destination" name="destination" placeholder="Enter Destination Location" class="input" />
+          </div>
+          <div class="checkbox-group">
+      <div class="checkbox-item">
+        <input type="checkbox" id="traffic-update" class="checkbox" />
+        <label for="traffic-update">Include Real-Time Traffic Updates</label>
+      </div>
+      <div class="checkbox-item">
+        <input type="checkbox" id="weather-update" class="checkbox" />
+        <label for="weather-update">Consider Weather Conditions</label>
+      </div>
+    </div>
+
+    <div class="route-preferences">
+      <label class="label">Route Preferences:</label>
+      <div class="preferences">
+        <label><input type="checkbox" id="avoid-tolls" /> Avoid Tolls</label>
+        <label><input type="checkbox" id="shortest-route" /> Shortest Route</label>
+      </div>
+      </div>
+
+    <button type="button" class="submit-btn" onClick="getOptimizedRoute()">Get Optimized Route</button>
+  </form>
+</div>
+            </div>
+          </div>
+    </>
+  );
+
+
+
+
+export default Driver;
