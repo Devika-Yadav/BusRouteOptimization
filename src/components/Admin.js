@@ -3,10 +3,12 @@ import "./Admin.css";
 import Login from "./Login";
 import { useNavigate } from 'react-router-dom'; // Move your styles into a CSS file
 
-const Driver = () => {
+const Admin = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [page,setPage] = useState("Dashboard");
+  const [showProfile, setShowProfile] = useState(false);
 
+  const toggleProfile = () => setShowProfile(!showProfile);
   const toggleSidebar = () => {
     setSidebarActive(!sidebarActive);
   };
@@ -41,32 +43,23 @@ const Driver = () => {
   return (
     <div className="app">
       <Navbar loadPage={loadPage} />
-      <Sidebar active={sidebarActive} toggleSidebar={toggleSidebar} loadPage={loadPage} />
+      <Sidebar active={sidebarActive} toggleSidebar={toggleSidebar} loadPage={loadPage} toggleProfile={toggleProfile} />
       <div className={`content ${sidebarActive ? "shifted" : ""}`}>
         {renderContent()}
       </div>
+      {showProfile && <ProfileModal toggleProfile={toggleProfile} />}
     </div>
   );
 }
-const Navbar = ({ loadPage }) => {
-  const navigate = useNavigate();
+const Navbar = ({toggleProfile}) => {
 
-  const handleLogout = () => {
-    navigate("/"); // Navigate to the login page
-  };
   return (
     <nav className="nav-bar">
       <div className="welcome">Welcome to Dynamic Bus Route Optimization</div>
-      <div>
-      <button onClick={() => loadPage("Dashboard")} className="link-button"> Dashboard</button>
-<button onClick={() => loadPage("Route Management")} className="link-button">Route Management</button>
-<button onClick={() => loadPage("Driver Management")} className="link-button">Driver Management</button>
-<button onClick={() => loadPage("Real-Time Monitoring")} className="link-button">Real-Time Monitoring</button>
-<button onClick={() => loadPage("Feedback")} className="link-button">Feedback</button>
-
-<button onClick={handleLogout} className="link-button">Logout</button>
-
-      </div>
+        <div className="profile-nav" onClick={toggleProfile} style={{ cursor: "pointer" }}>
+          
+      <img src="/passenger profile.png" alt="profile" className="profile-image"
+          /></div>
     </nav>
   );
 };
@@ -81,7 +74,7 @@ const Sidebar = ({ active, toggleSidebar, loadPage }) => {
     <>
       <div className={`sidebar ${active ? "active" : ""}`}>
         <h2>Admin Panel</h2>
-        <img src="/passenger profile.png" alt="profile" />
+       
 
         <nav className="nav-aside">
           <ul>
@@ -102,7 +95,7 @@ const Sidebar = ({ active, toggleSidebar, loadPage }) => {
 
             </li>
             <li>
-            <button onClick={() => loadPage("AlertsandFeedback")} className="link-button">Feedback</button>
+            <button onClick={() => loadPage("Feedback")} className="link-button">Feedback</button>
 
             </li>
             <li>
@@ -121,6 +114,94 @@ const Sidebar = ({ active, toggleSidebar, loadPage }) => {
     </>
   );
 };
+const ProfileModal = ({ toggleProfile }) => {
+  const [userDetails, setUserDetails] = useState({
+    name: "John Doe",
+    email: "john.doe@example.com",
+    role: "Admin",
+  });
+  const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserDetails({ ...userDetails, [name]: value });
+  };
+
+  const handleSaveChanges = () => {
+    // Save changes logic (e.g., API call)
+    alert("Changes saved successfully!");
+    setIsEditing(false);
+  };
+
+  const handleDeleteAccount = () => {
+    // Add account deletion logic here
+    alert("Account has been deleted.");
+    navigate("/"); // Redirect to the login or home page after deletion
+  };
+
+  return (
+    <div className="modal">
+      <div className="modal-content">
+        <button className="close-button" onClick={toggleProfile}>
+          &times;
+        </button>
+        <h2>Profile Details</h2>
+        <div className="profile-details">
+          <label>
+            <strong>Name:</strong>
+            {isEditing ? (
+              <input
+                type="text"
+                name="name"
+                value={userDetails.name}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <span>{userDetails.name}</span>
+            )}
+          </label>
+          <label>
+            <strong>Email:</strong>
+            {isEditing ? (
+              <input
+                type="email"
+                name="email"
+                value={userDetails.email}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <span>{userDetails.email}</span>
+            )}
+          </label>
+          <label>
+            <strong>Role:</strong>
+            <span>{userDetails.role}</span>
+          </label>
+        </div>
+        {isEditing ? (
+          <button className="save-button" onClick={handleSaveChanges}>
+            Save Changes
+          </button>
+        ) : (
+          <button className="edit-button" onClick={() => setIsEditing(true)}>
+            Edit Profile
+          </button>
+        )}
+        <button className="delete-button" onClick={handleDeleteAccount}>
+          Delete Account
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const assignBus = () => alert("Bus has been successfully assigned to the route!");
+const assignDriver = () =>
+  alert("Driver has been successfully assigned to the bus and notification sent to driver!");
+const getOptimizedRoute = () =>
+  alert("Optimized route has been successfully generated!");
+
 const Dashboard = () => (
   <>
   <div class="container">
@@ -279,7 +360,9 @@ const DriverManagement = () => (
                     <option value="route3">Route C (Stop 3 → Stop 4)</option>
                 </select>
 
-                <button type="submit" onclick="assignBus()">Assign Bus</button>
+                <button type="button" onClick={assignBus}>
+          Assign Bus
+        </button>
             </form>
         </div>
               </div>
@@ -300,7 +383,9 @@ const DriverManagement = () => (
                     <option value="bus2">Bus 2</option>
                     <option value="bus3">Bus 3</option>
                 </select>
-                <button type="submit" onclick="assignDriver()">Assign Driver</button>
+                <button type="button" onClick={assignDriver}>
+          Assign Driver
+        </button>
                 
             </form>
         </div>
@@ -387,15 +472,16 @@ const RealTimeMonitoring = () => (
       </div>
       </div>
 
-    <button type="button" class="submit-btn" onClick="getOptimizedRoute()">Get Optimized Route</button>
+    <button type="button" class="submit-btn" onClick={getOptimizedRoute}>Get Optimized Route</button>
   </form>
 </div>
             </div>
           </div>
     </>
   );
+  
+  
 
 
 
-
-export default Driver;
+export default Admin;

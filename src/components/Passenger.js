@@ -6,11 +6,11 @@ import { useNavigate } from 'react-router-dom';
 function Passenger() {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [page, setPage] = useState("track-bus");
-
+  const [showProfile, setShowProfile] = useState(false);
   const toggleSidebar = () => {
     setSidebarActive(!sidebarActive);
   };
-
+  const toggleProfile = () => setShowProfile(!showProfile);
   const loadPage = (page) => {
     setPage(page);
   };
@@ -49,27 +49,19 @@ function Passenger() {
       <div className={`content ${sidebarActive ? "shifted" : ""}`}>
         {renderContent()}
       </div>
+      {showProfile && <ProfileModal toggleProfile={toggleProfile} />}
     </div>
   );
 }
 
-const Navbar = ({ loadPage }) => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    navigate("/"); // Navigate to the login page
-  };
+const Navbar = ({ toggleProfile }) => {
 
   return (
     <nav className="nav-bar">
       <div className="welcome">Welcome to Dynamic Bus Route Optimization</div>
-      <div>
-      <button onClick={() => loadPage("track-bus")} className="link-button">Routes</button>
-<button onClick={() => loadPage("about")} className="link-button">About</button>
-<button onClick={() => loadPage("contact-us")} className="link-button">Contact Us</button>
-<button onClick={handleLogout} className="link-button">Logout</button>
-
-      </div>
+      <div className="profile-nav">
+          <img src="/passenger profile.png" alt="profile" className="profile-image"
+          onClick={toggleProfile} /></div>
     </nav>
   );
 };
@@ -85,7 +77,6 @@ const Sidebar = ({ active, toggleSidebar, loadPage }) => {
     <>
       <div className={`sidebar ${active ? "active" : ""}`}>
         <h2>Passenger Panel</h2>
-        <img src="/passenger profile.png" alt="profile" />
 
         <nav className="nav-aside">
           <ul>
@@ -156,6 +147,34 @@ const About = () => (
     </div>
   </div>
 );
+const ProfileModal = ({ toggleProfile }) => {
+  const navigate = useNavigate();
+
+  const handleDeleteAccount = () => {
+    // Add account deletion logic here
+    alert("Account has been deleted.");
+    navigate("/"); // Redirect to the login or home page after deletion
+  };
+
+  return (
+    <div className="modal">
+      <div className="modal-content">
+        <button className="close-button" onClick={toggleProfile}>
+          &times;
+        </button>
+        <h2>Profile Details</h2>
+        <div className="profile-details">
+          <p><strong>Name:</strong> John Doe</p>
+          <p><strong>Email:</strong> john.doe@example.com</p>
+          <p><strong>Role:</strong> Admin</p>
+        </div>
+        <button className="delete-button" onClick={handleDeleteAccount}>
+          Delete Account
+        </button>
+      </div>
+    </div>
+  );
+};
 const showAlert = (event) => {
   event.preventDefault();
   alert('Message Sent!');
