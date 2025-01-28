@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import "./Driver.css";
 import Login from "./Login";
 import { useNavigate } from 'react-router-dom'; // Move your styles into a CSS file
+import MapComponent from './MapComponent';
 
 const Driver = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [page,setPage] = useState("RouteDetails");
-  const [showProfile, setShowProfile] = useState(false);
-
-  const toggleProfile = () => setShowProfile(!showProfile);
+ 
   const toggleSidebar = () => {
     setSidebarActive(!sidebarActive);
   };
@@ -24,6 +23,8 @@ const Driver = () => {
         return <Map/>;
       case "AlertsandFeedback":
         return <AlertsandFeedback />;
+      case "Profile":
+          return <Profile />;
       case "Logout":
         return <Login />;
       default:
@@ -42,23 +43,109 @@ const Driver = () => {
       <div className={`content ${sidebarActive ? "shifted" : ""}`}>
         {renderContent()}
       </div>
-      {showProfile && <ProfileModal toggleProfile={toggleProfile} />}
     </div>
   );
 }
-const Navbar = ({ toggleProfile }) => {
+const Navbar = ({ loadPage }) => {
  
   return (
     <nav className="nav-bar">
       <div className="welcome">Welcome to Dynamic Bus Route Optimization</div>
-      <div className="profile-nav">
+      <div className="profile-nav" >
           
-          <img src="/passenger profile.png" alt="profile" className="profile-image"
-              onClick={toggleProfile} /></div>
+          <img src="/passenger profile.png" alt="profile" className="profile-image" onClick={() => loadPage("Profile")}
+              /></div>
         
     </nav>
   );
 };
+const Profile = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [username, setUsername] = useState("Amrutha");
+  const [email, setEmail] = useState("amruthaburadagunta09@gmail.com");
+  const [role, setRole] = useState("Driver"); // Default role
+  const navigate = useNavigate();
+
+  const handleDeleteAccount = () => {
+    if (window.confirm("Are you sure you want to delete your account?")) {
+      alert("Account deleted successfully.");
+      navigate("/"); // Navigate to login after deletion
+    }
+  };
+
+  const handleEditAccount = () => {
+    setIsEditing(true); // Start editing profile
+  };
+
+  const handleSaveChanges = () => {
+    setIsEditing(false); // Save changes and stop editing
+    alert("Profile updated successfully!");
+  };
+  const handleCancelEdit = () => {
+    setIsEditing(false); // Cancel edit and revert to previous state
+  };
+  return (
+    <div className="profile-container">
+      <h2>Profile</h2>
+      <div className="profile-section">
+        <div className="profile-field">
+          <label>Username:</label>
+          {isEditing ? (
+            <input 
+              type="text" 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+            />
+          ) : (
+            <p>{username}</p>
+          )}
+        </div>
+
+        <div className="profile-field">
+          <label>Email:</label>
+          {isEditing ? (
+            <input 
+              type="email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              />
+            ) : (
+              <p>{email}</p>
+            )}
+          </div>
+  
+          <div className="profile-field">
+            <label>Role:</label>
+            {isEditing ? (
+              <input 
+                type="text" 
+                value={role} 
+                onChange={(e) => setRole(e.target.value)} 
+              />
+            ) : (
+              <p>{role}</p>
+            )}
+  
+              </div>
+              </div>
+        
+              <div className="profile-actions">
+                {isEditing ? (
+                  <>
+                    <button className="btn-save" onClick={handleSaveChanges}>Save Changes</button>
+                    <button className="btn-cancel" onClick={handleCancelEdit}>Cancel</button>
+                  </>
+                ) : (
+                  <>
+                    <button className="btn-edit" onClick={handleEditAccount}>Edit Account</button>
+                    <button className="btn-delete" onClick={handleDeleteAccount}>Delete Account</button>
+                  </>
+                )}
+              </div>
+            </div>
+          );
+        };
+
 const Sidebar = ({ active, toggleSidebar, loadPage }) => {
   const navigate = useNavigate();
    // Initialize the useNavigate hook
@@ -134,39 +221,12 @@ const Map = () => (
   <>
   <div className="Container">
     <h3>Route Map</h3>
-
   </div>
+  <MapComponent />
   </>
+  
 
 );
-const ProfileModal = ({ toggleProfile }) => {
-  const navigate = useNavigate();
-
-  const handleDeleteAccount = () => {
-    // Add account deletion logic here
-    alert("Account has been deleted.");
-    navigate("/"); // Redirect to the login or home page after deletion
-  };
-
-  return (
-    <div className="modal">
-      <div className="modal-content">
-        <button className="close-button" onClick={toggleProfile}>
-          &times;
-        </button>
-        <h2>Profile Details</h2>
-        <div className="profile-details">
-          <p><strong>Name:</strong> John Doe</p>
-          <p><strong>Email:</strong> john.doe@example.com</p>
-          <p><strong>Role:</strong> Admin</p>
-        </div>
-        <button className="delete-button" onClick={handleDeleteAccount}>
-          Delete Account
-        </button>
-      </div>
-    </div>
-  );
-};
 
 
   const AlertsandFeedback = () => (
@@ -185,7 +245,7 @@ const ProfileModal = ({ toggleProfile }) => {
                   <input type="email" id="email" name="email" placeholder="Your Email" required />
                   <label for="message">Message:</label>
                   <textarea id="message" name="message" placeholder="Your Message" rows="4" required></textarea>
-                  <button type="submit">Submit</button>
+                  <button type="submit" onClick={showAlert}>Submit</button>
                 </form>
               </section>
             </div>
@@ -193,7 +253,12 @@ const ProfileModal = ({ toggleProfile }) => {
     </>
   );
 
-
+  const showAlert = (event) => {
+    event.preventDefault();
+    alert('Message Sent!');
+  
+  
+  };
 
 
 export default Driver;

@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "./Admin.css";
 import Login from "./Login";
 import { useNavigate } from 'react-router-dom'; // Move your styles into a CSS file
+import MapComponent from './MapComponent';
+
 
 const Admin = () => {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [page,setPage] = useState("Dashboard");
-  const [showProfile, setShowProfile] = useState(false);
 
-  const toggleProfile = () => setShowProfile(!showProfile);
   const toggleSidebar = () => {
     setSidebarActive(!sidebarActive);
   };
@@ -26,9 +26,10 @@ const Admin = () => {
         return <DriverManagement />;
         case "Real-Time Monitoring":
         return <RealTimeMonitoring/>;
+        case "Profile":
+        return <Profile />;
       case "Feedback":
         return <Feedback />;
-        
       case "Logout":
         return <Login />;
       default:
@@ -43,26 +44,113 @@ const Admin = () => {
   return (
     <div className="app">
       <Navbar loadPage={loadPage} />
-      <Sidebar active={sidebarActive} toggleSidebar={toggleSidebar} loadPage={loadPage} toggleProfile={toggleProfile} />
+      <Sidebar active={sidebarActive} toggleSidebar={toggleSidebar} loadPage={loadPage}  />
       <div className={`content ${sidebarActive ? "shifted" : ""}`}>
         {renderContent()}
       </div>
-      {showProfile && <ProfileModal toggleProfile={toggleProfile} />}
+
     </div>
   );
 }
-const Navbar = ({toggleProfile}) => {
+const Navbar = ({loadPage}) => {
 
   return (
     <nav className="nav-bar">
       <div className="welcome">Welcome to Dynamic Bus Route Optimization</div>
-        <div className="profile-nav" onClick={toggleProfile} style={{ cursor: "pointer" }}>
+        <div className="profile-nav" >
           
-      <img src="/passenger profile.png" alt="profile" className="profile-image"
+        <img src="/passenger profile.png" alt="profile" className="profile-image" onClick={() => loadPage("Profile")}
           /></div>
     </nav>
   );
 };
+const Profile = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [username, setUsername] = useState("Devika yadav");
+  const [email, setEmail] = useState("devikayadavavula@gmail.com");
+  const [role, setRole] = useState("Administrator"); // Default role
+  const navigate = useNavigate();
+
+  const handleDeleteAccount = () => {
+    if (window.confirm("Are you sure you want to delete your account?")) {
+      alert("Account deleted successfully.");
+      navigate("/"); // Navigate to login after deletion
+    }
+  };
+
+  const handleEditAccount = () => {
+    setIsEditing(true); // Start editing profile
+  };
+
+  const handleSaveChanges = () => {
+    setIsEditing(false); // Save changes and stop editing
+    alert("Profile updated successfully!");
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false); // Cancel edit and revert to previous state
+  };
+  return (
+    <div className="profile-container">
+      <h2>Profile</h2>
+      <div className="profile-section">
+        <div className="profile-field">
+          <label>Username:</label>
+          {isEditing ? (
+            <input 
+              type="text" 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+            />
+          ) : (
+            <p>{username}</p>
+          )}
+        </div>
+
+        <div className="profile-field">
+          <label>Email:</label>
+          {isEditing ? (
+            <input 
+              type="email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+            />
+          ) : (
+            <p>{email}</p>
+          )}
+        </div>
+
+        <div className="profile-field">
+          <label>Role:</label>
+          {isEditing ? (
+            <input 
+              type="text" 
+              value={role} 
+              onChange={(e) => setRole(e.target.value)} 
+            />
+          ) : (
+            <p>{role}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="profile-actions">
+        {isEditing ? (
+          <>
+            <button className="btn-save" onClick={handleSaveChanges}>Save Changes</button>
+            <button className="btn-cancel" onClick={handleCancelEdit}>Cancel</button>
+          </>
+        ) : (
+          <>
+            <button className="btn-edit" onClick={handleEditAccount}>Edit Account</button>
+            <button className="btn-delete" onClick={handleDeleteAccount}>Delete Account</button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const Sidebar = ({ active, toggleSidebar, loadPage }) => {
   const navigate = useNavigate();
    // Initialize the useNavigate hook
@@ -112,87 +200,6 @@ const Sidebar = ({ active, toggleSidebar, loadPage }) => {
         &#9776;
       </div>
     </>
-  );
-};
-const ProfileModal = ({ toggleProfile }) => {
-  const [userDetails, setUserDetails] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    role: "Admin",
-  });
-  const [isEditing, setIsEditing] = useState(false);
-  const navigate = useNavigate();
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserDetails({ ...userDetails, [name]: value });
-  };
-
-  const handleSaveChanges = () => {
-    // Save changes logic (e.g., API call)
-    alert("Changes saved successfully!");
-    setIsEditing(false);
-  };
-
-  const handleDeleteAccount = () => {
-    // Add account deletion logic here
-    alert("Account has been deleted.");
-    navigate("/"); // Redirect to the login or home page after deletion
-  };
-
-  return (
-    <div className="modal">
-      <div className="modal-content">
-        <button className="close-button" onClick={toggleProfile}>
-          &times;
-        </button>
-        <h2>Profile Details</h2>
-        <div className="profile-details">
-          <label>
-            <strong>Name:</strong>
-            {isEditing ? (
-              <input
-                type="text"
-                name="name"
-                value={userDetails.name}
-                onChange={handleInputChange}
-              />
-            ) : (
-              <span>{userDetails.name}</span>
-            )}
-          </label>
-          <label>
-            <strong>Email:</strong>
-            {isEditing ? (
-              <input
-                type="email"
-                name="email"
-                value={userDetails.email}
-                onChange={handleInputChange}
-              />
-            ) : (
-              <span>{userDetails.email}</span>
-            )}
-          </label>
-          <label>
-            <strong>Role:</strong>
-            <span>{userDetails.role}</span>
-          </label>
-        </div>
-        {isEditing ? (
-          <button className="save-button" onClick={handleSaveChanges}>
-            Save Changes
-          </button>
-        ) : (
-          <button className="edit-button" onClick={() => setIsEditing(true)}>
-            Edit Profile
-          </button>
-        )}
-        <button className="delete-button" onClick={handleDeleteAccount}>
-          Delete Account
-        </button>
-      </div>
-    </div>
   );
 };
 
@@ -431,6 +438,8 @@ const RealTimeMonitoring = () => (
   <div className="real-monitoring-card">
     <h2>Real-Time Monitoring</h2>
     <p>Real-Time Monitoring...(MAP)</p>
+    <MapComponent/>
+
   </div>
     
   </div>

@@ -321,3 +321,288 @@ font-weight: bold;
 background-color: #71f778;
 }
 
+.profile-nav {
+    position: relative;
+  }
+  
+  .profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 150px;
+  }
+  
+  .dropdown-menu button {
+    background: none;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dropdown-menu button:hover {
+    background-color: #f0f0f0;
+  }
+  /* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #ffffff;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .close-button:hover {
+    color: #ff0000;
+  }
+  
+  /* Profile Details */
+  .profile-details {
+    margin-top: 1rem;
+  }
+  
+  .detail-row {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+  
+  input {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    flex-grow: 1;
+  }
+  
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Buttons */
+  .profile-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .save-button {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .save-button:hover {
+    background-color: #218838;
+  }
+  
+  .cancel-button {
+    background-color: #ffc107;
+    color: #212529;
+  }
+  
+  .cancel-button:hover {
+    background-color: #e0a800;
+  }
+  
+  .edit-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333;
+  }
+  /* Profile container */
+  .profile-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-container h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Profile edit section */
+  .profile-edit-section,
+  .profile-view-section {
+    margin-top: 20px;
+  }
+  
+  .profile-field {
+    margin-bottom: 15px;
+  }
+  
+  .profile-field label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .profile-field input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .profile-field input:focus {
+    border-color: #4a90e2;
+    outline: none;
+  }
+  
+  /* Profile actions */
+  .profile-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .profile-actions button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .profile-actions .btn-save {
+    background-color: #4a90e2;
+    color: #fff;
+  }
+  
+  .profile-actions .btn-save:hover {
+    background-color: #357ABD;
+  }
+  
+  .profile-actions .btn-cancel {
+    background-color: #e5e5e5;
+    color: #333;
+  }
+  
+  .profile-actions .btn-cancel:hover {
+    background-color: #d6d6d6;
+  }
+  
+  .profile-actions .btn-edit {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .profile-actions .btn-edit:hover {
+    background-color: #218838;
+  }
+  
+  .profile-actions .btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .profile-actions .btn-delete:hover {
+    background-color: #c82333;
+  }
+  
+  /* Profile view section */
+  .profile-view-section p {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .profile-view-section .btn-edit,
+  .profile-view-section .btn-delete {
+    width: 100%;
+  }
+  
+  /* Small screen responsiveness */
+  @media (max-width: 768px) {
+    .profile-container {
+      padding: 10px;
+    }
+  
+    .profile-actions {
+      flex-direction: column;
+    }
+  
+    .profile-actions button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }

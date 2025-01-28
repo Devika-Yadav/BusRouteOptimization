@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Signup.css';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword , sendEmailVerification  } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -15,6 +15,8 @@ const SignUp = () => {
     const [confirmpassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [role, setRole] = useState("passenger");
+    //const [isEmailVerificationSent, setIsEmailVerificationSent] = useState(false); // Track if email verification is sent
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -29,10 +31,17 @@ const SignUp = () => {
         try {
             await createUserWithEmailAndPassword(auth, email, newpassword);
             const user = auth.currentUser;
+            
+            sendEmailVerification(user).then(()=>{
+                alert("Email verifivation link sent");
+            });
+            //setIsEmailVerificationSent(true);
             if (user) {
                 await setDoc(doc(db, "Users", user.uid), {
                     email: user.email,
                     Username: username,
+                    Password : newpassword,
+                    Role : role,
                 });
             }
             toast.success("User Registered Successfully!!", {
@@ -44,6 +53,7 @@ const SignUp = () => {
             });
         }
     };
+    // Monitor the authentication state and email verification
 
     return (
         <React.Fragment>
@@ -55,7 +65,11 @@ const SignUp = () => {
                         <div className="form-group">
                             <div className="list-box-container">
                                 <label htmlFor="user-role" className="list-label">Select Role</label>
-                                <select id="user-role" className="custom-list-box">
+                                <select id="user-role"
+                                 className="custom-list-box"
+                                value={role} // Bind role state to the dropdown
+                                onChange={(e) => setRole(e.target.value)}
+                                >
                                     <option value="admin">Admin</option>
                                     <option value="driver">Driver</option>
                                     <option value="passenger">Passenger</option>

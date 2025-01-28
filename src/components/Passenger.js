@@ -2,19 +2,62 @@ import React, { useState } from "react";
 import "./Passenger.css"; // Import corresponding CSS styles
 import Login from "./Login";
 import { useNavigate } from 'react-router-dom';
+import {  collection, query, where, getDocs }  from "firebase/firestore";
+import { db } from "./firebase";
+import MapComponent from './MapComponent';
+
+let name = null;
+let lon = null;
+let lat = null;
+let busNum = null;
+async function getUsersById() {
+  try {
+    //const sid = document.getElementById('busnum').value;
+    const q = query(collection(db, "routes"), where("stop_id","==",busNum));
+   //console.log(busNum);
+    // Execute the query
+    const querySnapshot = await getDocs(q);
+
+    // Loop through the results and log the data
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const id = data.stop_id;
+      name = data.stop_name;
+      lon = data.stop_lon;
+      lat = data.stop_lat;
+      console.log("ID:", id);
+      console.log("Name:", name);
+      console.log("lan:", lon);
+      console.log("lat:", lat);
+      //console.log("Age:", data.age);
+      return {lon,lat};
+    });
+    
+  } catch (error) {
+    console.error("Error getting users:", error);
+  }
+}
+// Reference to a specific document
+
+// Example of calling the function
+//getUsersById();
+
+// Example of calling the function
+
+// Example of calling the function
+//getDocumentById("");
 
 function Passenger() {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [page, setPage] = useState("track-bus");
-  const [showProfile, setShowProfile] = useState(false);
+
   const toggleSidebar = () => {
     setSidebarActive(!sidebarActive);
   };
-  const toggleProfile = () => setShowProfile(!showProfile);
+
   const loadPage = (page) => {
     setPage(page);
   };
-
   const renderContent = () => {
     switch (page) {
       case "home":
@@ -22,6 +65,7 @@ function Passenger() {
           <div>
             <h2>Home</h2>
             <p>Welcome to the Home page.</p>
+            
           </div>
         );
       case "track-bus":
@@ -30,6 +74,8 @@ function Passenger() {
         return <About/>;
       case "contact-us":
         return <ContactUs />;
+        case "Profile":
+        return <Profile />;
       case "Logout":
         return <Login />;
       default:
@@ -48,21 +94,110 @@ function Passenger() {
       <Sidebar active={sidebarActive} toggleSidebar={toggleSidebar} loadPage={loadPage} />
       <div className={`content ${sidebarActive ? "shifted" : ""}`}>
         {renderContent()}
+
       </div>
-      {showProfile && <ProfileModal toggleProfile={toggleProfile} />}
+      
     </div>
+    
   );
 }
 
-const Navbar = ({ toggleProfile }) => {
+const Navbar = ({loadPage}) => {
 
   return (
     <nav className="nav-bar">
       <div className="welcome">Welcome to Dynamic Bus Route Optimization</div>
-      <div className="profile-nav">
-          <img src="/passenger profile.png" alt="profile" className="profile-image"
-          onClick={toggleProfile} /></div>
+        <div className="profile-nav" >
+          
+      <img src="/passenger profile.png" alt="profile" className="profile-image" onClick={() => loadPage("Profile")}
+          /></div>
     </nav>
+  );
+};
+const Profile = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [username, setUsername] = useState("Ananya");
+  const [email, setEmail] = useState("ananya.abbaraju@gmail.com");
+  const [role, setRole] = useState("Passenger"); // Default role
+  const navigate = useNavigate();
+
+  const handleDeleteAccount = () => {
+    if (window.confirm("Are you sure you want to delete your account?")) {
+      alert("Account deleted successfully.");
+      navigate("/"); // Navigate to login after deletion
+    }
+  };
+
+  const handleEditAccount = () => {
+    setIsEditing(true); // Start editing profile
+  };
+
+  const handleSaveChanges = () => {
+    setIsEditing(false); // Save changes and stop editing
+    alert("Profile updated successfully!");
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false); // Cancel edit and revert to previous state
+  };
+  return (
+    <div className="profile-container">
+      <h2>Profile</h2>
+      <div className="profile-section">
+        <div className="profile-field">
+          <label>Username:</label>
+          {isEditing ? (
+            <input 
+              type="text" 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+            />
+          ) : (
+            <p>{username}</p>
+          )}
+        </div>
+
+        <div className="profile-field">
+          <label>Email:</label>
+          {isEditing ? (
+            <input 
+              type="email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+            />
+          ) : (
+            <p>{email}</p>
+          )}
+        </div>
+
+        <div className="profile-field">
+          <label>Role:</label>
+          {isEditing ? (
+            <input 
+              type="text" 
+              value={role} 
+              onChange={(e) => setRole(e.target.value)} 
+            />
+          ) : (
+            <p>{role}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="profile-actions">
+        {isEditing ? (
+          <>
+            <button className="btn-save" onClick={handleSaveChanges}>Save Changes</button>
+            <button className="btn-cancel" onClick={handleCancelEdit}>Cancel</button>
+          </>
+        ) : (
+          <>
+            <button className="btn-edit" onClick={handleEditAccount}>Edit Account</button>
+            <button className="btn-delete" onClick={handleDeleteAccount}>Delete Account</button>
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 
@@ -77,20 +212,23 @@ const Sidebar = ({ active, toggleSidebar, loadPage }) => {
     <>
       <div className={`sidebar ${active ? "active" : ""}`}>
         <h2>Passenger Panel</h2>
-
+        
         <nav className="nav-aside">
           <ul>
             <li>
-            <button onClick={() => loadPage("track-bus")} className="link-button">Routes</button>
-
+              <a href="#track-bus" onClick={() => loadPage("track-bus")}>
+                Routes
+              </a>
             </li>
             <li>
-            <button onClick={() => loadPage("about")} className="link-button">About</button>
-
+              <a href="#about" onClick={() => loadPage("about")}>
+                About
+              </a>
             </li>
             <li>
-            <button onClick={() => loadPage("contact-us")} className="link-button">Contact Us</button>
-
+              <a href="#contact-us" onClick={() => loadPage("contact-us")}>
+                Contact Us
+              </a>
             </li>
             <li>
             <button onClick={handleLogout} className="link-button">Logout</button>
@@ -103,7 +241,9 @@ const Sidebar = ({ active, toggleSidebar, loadPage }) => {
         onClick={toggleSidebar}
       >
         &#9776;
+        
       </div>
+      
     </>
   );
 };
@@ -147,34 +287,6 @@ const About = () => (
     </div>
   </div>
 );
-const ProfileModal = ({ toggleProfile }) => {
-  const navigate = useNavigate();
-
-  const handleDeleteAccount = () => {
-    // Add account deletion logic here
-    alert("Account has been deleted.");
-    navigate("/"); // Redirect to the login or home page after deletion
-  };
-
-  return (
-    <div className="modal">
-      <div className="modal-content">
-        <button className="close-button" onClick={toggleProfile}>
-          &times;
-        </button>
-        <h2>Profile Details</h2>
-        <div className="profile-details">
-          <p><strong>Name:</strong> John Doe</p>
-          <p><strong>Email:</strong> john.doe@example.com</p>
-          <p><strong>Role:</strong> Admin</p>
-        </div>
-        <button className="delete-button" onClick={handleDeleteAccount}>
-          Delete Account
-        </button>
-      </div>
-    </div>
-  );
-};
 const showAlert = (event) => {
   event.preventDefault();
   alert('Message Sent!');
@@ -186,10 +298,13 @@ const TrackBus = () => {
   const [imageResult, setImageResult] = useState("");  // State to store the image for the result
 
   const handleSearch = () => {
-    const busNum = document.getElementById("busnum").value;
+    busNum = document.getElementById("busnum").value;
     setResult(`Bus Number: ${busNum}`);
-    setImageResult("/search.jpg");  // Change image when "Search" is clicked
+    getUsersById(busNum);
+    //setImageResult("/search.jpg");  // Change image when "Search" is clicked
   };
+  
+
 
   const handleSubmit = () => {
     const source = document.getElementById("source").value;
@@ -233,6 +348,7 @@ const TrackBus = () => {
           </form>
         </div>
       </div>
+    
       {result && (
        <div className="track-card">
        <h3>Result</h3>
@@ -243,8 +359,9 @@ const TrackBus = () => {
            alt="Result"
          />
        )}
+       <MapComponent/>
      </div>
-
+      
       )}
     </div>
   );
@@ -252,7 +369,7 @@ const TrackBus = () => {
 
 const ContactUs = () => (
   <section id="contact-us" className="contact-us">
-    <div className="card-6">
+    <div className="card">
       <h2>Contact Us</h2>
       <form id="contact-form">
         <label htmlFor="name">Name:</label>
