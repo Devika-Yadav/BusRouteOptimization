@@ -52,6 +52,7 @@ const Admin = () => {
     </div>
   );
 }
+
 const Navbar = ({loadPage}) => {
 
   return (
